@@ -12,6 +12,7 @@ fun main() {
     val tiempo1 = Tiempo(hora, minuto, segundo)
     println(tiempo1.toString())
 }
+
 fun getHora(): String {
     println("Introduce la hora")
     var hora = readLine().toString()
@@ -21,6 +22,7 @@ fun getHora(): String {
     }
     return hora
 }
+
 fun getMinuto(): String {
     println("Introduce los minutos")
     var minuto = readLine().toString()
@@ -33,7 +35,8 @@ fun getMinuto(): String {
     }
     return minuto
 }
-fun getSegundo(): String{
+
+fun getSegundo(): String {
     println("Introduce los segundos")
     var segundo = readLine().toString()
     if (segundo.isEmpty()) {
