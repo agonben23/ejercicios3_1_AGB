@@ -32,18 +32,20 @@ class Persona(val dni: String) {
     }
 
     fun esMoroso() {
-        var moroso : Boolean
+        var moroso : Boolean = false
         val contadorMax = lisCuenta.size
         var i = 0
-        do {
-            var cActual = lisCuenta.get(i)
-            moroso = cActual.saldo < 0
-            i += 1
-        }while (moroso || (i == contadorMax))
-        if (moroso == true){
-            println("Esta persona es morosa")
-        }else
+        do{
+            val cActual = lisCuenta[i]
+            if (cActual.saldo < 0){
+                println("Esta persona es morosa")
+                moroso = true
+            }else
+                i++
+        }while (!moroso && i != contadorMax)
+        if(!moroso){
             println("Esta persona no es morosa")
+        }
     }
 }
 
@@ -57,3 +59,20 @@ fun main() {
     cuenta1.hacerTransferencia(20.0, cuenta2)
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
