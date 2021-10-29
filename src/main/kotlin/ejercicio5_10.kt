@@ -83,5 +83,7 @@ fun main() {
     conjunto1.anadirLibro(libro2)
     conjunto1.cCalificacion()
     conjunto1.eliminarLibro("bianco")
-
+    conjunto1.eliminarLibro("juanma")
+    val libro3 = Libro("aries","rafa",57,7)
+    libro3.mostrar()
 }
