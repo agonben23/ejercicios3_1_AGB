@@ -10,6 +10,12 @@ class Libro(var titulo: String, var autor: String, var num_pag: Int, var calific
     fun cambiarCalif(nuevaCalif: Int) {
         calificacion = nuevaCalif
     }
+    fun mostrar(){
+        println("El libro se llama $titulo")
+        println("Tiene un total de $num_pag paginas")
+        println("Su autor se llama $autor")
+        println("Su calificacion es $calificacion")
+    }
 }
 
 
@@ -42,47 +48,30 @@ class ConjuntoLibros(val cantidad: Int) {
     fun cCalificacion(){
         var mCalificacion = 0
         var pCalificacion = 10
-        var lMejCal : Libro
-        var lPeorCal : Libro
+        var lMejCalTitulo = ""
+        var lPeorCalTitulo= ""
+        var lMejCalAutor= ""
+        var lPeorCalAutor= ""
         val contadorMax = lislibros.size
         var i = 0
         do {
             val lActual = lislibros[i]
-            lMejCal = lActual
             if (lActual.calificacion > mCalificacion) {
                 mCalificacion = lActual.calificacion
-                i++
-            } else
-                i++
-        } while (i != contadorMax)
-        var i2 = 0
-        do {
-            val lActual = lislibros[i2]
-            lPeorCal = lActual
-            if (lActual.calificacion < pCalificacion) {
-                lPeorCal = lislibros[i2]
-                pCalificacion = lActual.calificacion
-                i2++
-            } else
-                i2++
-        } while (i2 != contadorMax)
-        println("El libro con mayor calificación es ${lMejCal.titulo} de ${lMejCal.autor} con una calificación de ${lMejCal.calificacion}")
-        println("El libro con peor calificación es ${lPeorCal.titulo} de ${lPeorCal.autor} con una calificación de ${lPeorCal.calificacion}")
-
-    }
-    fun mostrarTodo(){
-        val contadorMax = lislibros.size
-        var i = 0
-        do{
-            if (i<contadorMax) {
-                val todo = lislibros[i]
-                println("El libro se llama ${todo.titulo}")
-                println("Tiene un total de ${todo.num_pag} paginas")
-                println("Su autor se llama ${todo.autor}")
-                println("Su calificacion es ${todo.calificacion}")
-                i++
+                lMejCalTitulo = lActual.titulo
+                lMejCalAutor = lActual.autor
             }
-        }while (i != contadorMax)
+
+            if (lActual.calificacion < pCalificacion) {
+                pCalificacion = lActual.calificacion
+                lPeorCalTitulo = lActual.titulo
+                lPeorCalAutor = lActual.autor
+            }
+            i++
+        } while (i != contadorMax)
+        println("El libro con mayor calificación es $lMejCalTitulo de $lMejCalAutor con una calificación de $mCalificacion")
+        println("El libro con peor calificación es $lPeorCalTitulo de $lPeorCalAutor con una calificación de $pCalificacion")
+
     }
 }
 
@@ -94,4 +83,5 @@ fun main() {
     conjunto1.anadirLibro(libro2)
     conjunto1.cCalificacion()
     conjunto1.eliminarLibro("bianco")
+
 }
