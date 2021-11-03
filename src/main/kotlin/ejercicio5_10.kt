@@ -1,3 +1,5 @@
+import kotlinx.coroutines.*
+
 class Libro(var titulo: String, var autor: String, var num_pag: Int, var calificacion: Int) {
     fun cambiarTitulo(nuevoTitulo: String) {
         titulo = nuevoTitulo
