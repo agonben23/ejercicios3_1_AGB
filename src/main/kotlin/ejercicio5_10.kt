@@ -1,6 +1,13 @@
 import kotlinx.coroutines.*
 
 class Libro(var titulo: String, var autor: String, var num_pag: Int, var calificacion: Int) {
+    init {
+        require(titulo.isNullOrEmpty()) { "El título no puede ser nulo" }
+        require(autor.isNullOrEmpty()) { "El autor no puede ser nulo" }
+        require(num_pag > 0) { "El número de paginas debe ser mayor que 0" }
+        require(num_pag in 0..10) { "La calificación debe entre entre 0 y 10" }
+    }
+
     fun cambiarTitulo(nuevoTitulo: String) {
         titulo = nuevoTitulo
     }
@@ -12,16 +19,14 @@ class Libro(var titulo: String, var autor: String, var num_pag: Int, var calific
     fun cambiarCalif(nuevaCalif: Int) {
         calificacion = nuevaCalif
     }
-    fun mostrar(){
-        println("El libro se llama $titulo")
-        println("Tiene un total de $num_pag paginas")
-        println("Su autor se llama $autor")
-        println("Su calificacion es $calificacion")
+
+    override fun toString(): String {
+        return ("El libro se llama $titulo\nTiene un total de $num_pag paginas\nSu autor se llama $autor\nSu calificacion es $calificacion")
     }
 }
 
 
-class ConjuntoLibros(val cantidad: Int) {
+class ConjuntoLibros(private val cantidad: Int) {
     val lislibros = arrayListOf<Libro>()
     fun anadirLibro(libroNuevo: Libro) {
         if (lislibros.size <= cantidad) {
@@ -31,7 +36,7 @@ class ConjuntoLibros(val cantidad: Int) {
     }
 
     fun eliminarLibro(campo: String) {
-        var eliminado : Boolean = false
+        var eliminado: Boolean = false
         val contadorMax = lislibros.size
         var i = 0
         do {
@@ -39,21 +44,22 @@ class ConjuntoLibros(val cantidad: Int) {
             if (lActual.autor == campo || lActual.titulo == campo) {
                 lislibros.remove(lActual)
                 println("Se ha eliminado el libro ${lActual.titulo} de ${lActual.autor}")
-                eliminado= true
+                eliminado = true
             } else
                 i++
         } while (i != contadorMax && !eliminado)
-        if (!eliminado){
+        if (!eliminado) {
             println("No se ha encontrado ningún libro con este campo")
         }
     }
-    fun cCalificacion(){
+
+    fun cCalificacion() {
         var mCalificacion = 0
         var pCalificacion = 10
         var lMejCalTitulo = ""
-        var lPeorCalTitulo= ""
-        var lMejCalAutor= ""
-        var lPeorCalAutor= ""
+        var lPeorCalTitulo = ""
+        var lMejCalAutor = ""
+        var lPeorCalAutor = ""
         val contadorMax = lislibros.size
         var i = 0
         do {
@@ -86,6 +92,6 @@ fun main() {
     conjunto1.cCalificacion()
     conjunto1.eliminarLibro("bianco")
     conjunto1.eliminarLibro("juanma")
-    val libro3 = Libro("aries","rafa",57,7)
-    libro3.mostrar()
+    val libro3 = Libro("aries", "rafa", 57, 7)
+    libro3.toString()
 }

@@ -1,6 +1,4 @@
-import org.jetbrains.annotations.TestOnly
-
-class Cuenta(val numCuenta: String, var saldo: Double) {
+class Cuenta(val numCuenta: String, var saldo: Double = 0.0) {
     fun recibirAbono() {
         println("Introduzca el saldo a añadir")
         val abono = readLine()!!.toDouble()
@@ -13,12 +11,12 @@ class Cuenta(val numCuenta: String, var saldo: Double) {
         saldo -= pago
     }
 
-    fun hacerTransferencia(importe: Double, cuentaIngreso: Cuenta) {
-        saldo -= importe
-        cuentaIngreso.saldo += importe
-        println("Se ha realizado una transferencia de $importe desde la cuenta $numCuenta a la cuenta ${cuentaIngreso.numCuenta}")
-        println("El nuevo saldo de la cuenta de pago $numCuenta es $saldo")
-        println("El nuevo saldo de la cuenta de ingreso ${cuentaIngreso.numCuenta} es ${cuentaIngreso.saldo}")
+    companion object {
+        fun hacerTransferencia(importe: Double,cuentaPago: Cuenta, cuentaIngreso: Cuenta) {
+            cuentaPago.saldo -= importe
+            cuentaIngreso.saldo += importe
+            transferenciaHecha(importe, cuentaPago.numCuenta, cuentaIngreso, cuentaPago.saldo)
+        }
     }
 }
 
@@ -30,14 +28,13 @@ class Persona(val dni: String) {
         } else
             println("Esta persona ya tiene tres cuentas asociadas")
     }
-
-    fun esMoroso() {
-        var moroso : Boolean = false
-        val contadorMax = lisCuenta.size
+companion object{
+    fun esMoroso(persona: Persona) {
+        var moroso = false
+        val contadorMax = persona.lisCuenta.size
         var i = 0
         do{
-            val cActual = lisCuenta[i]
-            if (cActual.saldo < 0){
+            if (persona.lisCuenta[i].saldo < 0){
                 println("Esta persona es morosa")
                 moroso = true
             }else
@@ -48,6 +45,7 @@ class Persona(val dni: String) {
         }
     }
 }
+}
 
 fun main() {
     val cuenta1 = Cuenta("3453453GDG", 600.0)
@@ -55,9 +53,13 @@ fun main() {
     val persona1 = Persona("4545745H")
     persona1.anadirCuenta(cuenta1)
     persona1.anadirCuenta(cuenta2)
-    persona1.esMoroso()
-    cuenta1.hacerTransferencia(20.0, cuenta2)
-
+    Persona.esMoroso(persona1)
+    Cuenta.hacerTransferencia(20.0,cuenta1,cuenta2)
+}
+fun transferenciaHecha(importe: Double,numCuenta: String,cuentaIngreso: Cuenta,saldo: Double){
+    println("Se ha realizado una transferencia de $importe desde la cuenta $numCuenta a la cuenta ${cuentaIngreso.numCuenta}")
+    println("El nuevo saldo de la cuenta de pago $numCuenta es $saldo")
+    println("El nuevo saldo de la cuenta de ingreso ${cuentaIngreso.numCuenta} es ${cuentaIngreso.saldo}")
 }
 
 
